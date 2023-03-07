@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   };
   Todo.init({
     description: DataTypes.STRING,
-    complete: DataTypes.BOOLEAN,
+    completed: DataTypes.BOOLEAN,
     completeText: {
       type: DataTypes.VIRTUAL,
       get(){
