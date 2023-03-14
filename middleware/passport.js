@@ -1,4 +1,4 @@
-const password = require('passport');
+const passport = require('passport');
 const {Strategy} = require('passport-local')
 const {User} = require('../models')
 const md5 = require('md5')
@@ -28,7 +28,7 @@ const validationStrategy = new Strategy({
 passport.use(validationStrategy)
 
 passport.serializeUser(function(user, cb){
-    password.nextTick(function(){
+    process.nextTick(function(){
         cb(null, {id: user.id, username: user.email, displayName: user.displayName})
     })
 })
@@ -38,3 +38,5 @@ passport.deserializeUser(async function(user, cb){
         return cb(null, user)
     })
 })
+
+module.exports.passport = passport

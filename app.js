@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-
+const session = require('express-session')
 var app = express();
 
 // view engine setup
@@ -19,6 +19,18 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
+app.use(session({
+  secret: 'keyboardcat',
+  resave: true,
+  saveUninitialized: false,
+  cookie: {
+    secure: false,
+    maxAge: 6*60*60*1000
+  }
+}))
+const {passport} = require('./middleware/passport')
+app.use(passport.initialize())
+app.use(passport.authenticate('session'))
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
